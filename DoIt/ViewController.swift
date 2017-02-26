@@ -11,21 +11,37 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var taskList: UITableView!
+    var tasks : [Task] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        tasks = makeTasks()
         taskList.dataSource = self
         taskList.delegate = self
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10;
+        return tasks.count;
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = "hello"
+        if(tasks[indexPath.row].isImportant)
+        {
+            cell.textLabel?.text = "❗️\(tasks[indexPath.row].name)"
+        }
+        else{
+            cell.textLabel?.text = tasks[indexPath.row].name
+        }
         return cell
+    }
+    
+    func makeTasks() -> [Task]
+    {
+        let task1 = Task(name: "Walk dog", isImportant: false)
+        let task2 = Task(name: "Buy cheese", isImportant: true)
+        let task3 = Task(name: "Finsih work", isImportant: false)
+        return [task1, task2, task3]
     }
 
 }
