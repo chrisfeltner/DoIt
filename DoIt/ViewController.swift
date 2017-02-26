@@ -20,6 +20,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         taskList.delegate = self
     }
 
+    @IBAction func onAddButtonPress(_ sender: Any) {
+        performSegue(withIdentifier: "addTaskSegue", sender: nil)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count;
     }
