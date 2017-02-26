@@ -21,9 +21,12 @@ class CreateTaskViewController: UIViewController {
 
     @IBAction func onAddTaskPressed(_ sender: Any) {
         let newTask = Task(name: taskNameTextField.text!, isImportant: isImportantSwitch.isOn)
-        previousVC.tasks.append(newTask)
-        previousVC.taskList.reloadData()
-        navigationController!.popViewController(animated: true)
+        if taskNameTextField.text != ""{
+            previousVC.tasks.append(newTask)
+            previousVC.taskList.reloadData()
+            navigationController!.popViewController(animated: true)
+        }
+
         
     }
     
