@@ -12,13 +12,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var taskList: UITableView!
     var tasks : [Task] = []
-    var selectedTaskIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        tasks = makeTasks()
         taskList.dataSource = self
         taskList.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getTasks()
+        taskList.reloadData()
     }
     
     @IBAction func onAddButtonPress(_ sender: Any) {
@@ -30,16 +34,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "addTaskSegue"
-        {
-            let nextVC = segue.destination as! CreateTaskViewController
-            nextVC.previousVC = self
-        }
-        else if segue.identifier == "selectTaskSegue"
+        if segue.identifier == "selectTaskSegue"
         {
             let nextVC = segue.destination as! CompleteTaskViewController
-            nextVC.previousVC = self
-            nextVC.task = sender as! Task
+            nextVC.task = sender as? Task
+        }
+    }
+    
+    func getTasks()
+    {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        do{
+            try tasks = context.fetch(Task.fetchRequest()) as! [Task]
+            print(tasks)
+        }
+        catch
+        {
+            print("error")
         }
     }
     
@@ -47,28 +58,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = UITableViewCell()
         if(tasks[indexPath.row].isImportant)
         {
-            cell.textLabel?.text = "❗️\(tasks[indexPath.row].name)"
+            cell.textLabel?.text = "❗️\(tasks[indexPath.row].name!)"
         }
         else{
-            cell.textLabel?.text = tasks[indexPath.row].name
+            cell.textLabel?.text = tasks[indexPath.row].name!
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let task = tasks[indexPath.row]
-        selectedTaskIndex = indexPath.row
         performSegue(withIdentifier: "selectTaskSegue", sender: task)
         
     }
-    
-    func makeTasks() -> [Task]
-    {
-        let task1 = Task(name: "Walk dog", isImportant: false)
-        let task2 = Task(name: "Buy cheese", isImportant: true)
-        let task3 = Task(name: "Finsih work", isImportant: false)
-        return [task1, task2, task3]
-    }
+
     
 }
 
