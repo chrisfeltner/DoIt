@@ -10,6 +10,48 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Complete Task View Controller-->
+        <scene sceneID="8QA-gK-w3g">
+            <objects>
+                <viewController id="JqR-e7-8VD" customClass="CompleteTaskViewController" customModule="DoIt" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BPc-mP-WdC"/>
+                        <viewControllerLayoutGuide type="bottom" id="oNW-GJ-40W"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9HD-gy-Lzg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="task" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y24-TT-Plh">
+                                <rect key="frame" x="171.5" y="143" width="32.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IDF-SV-2uG">
+                                <rect key="frame" x="154" y="239" width="67" height="30"/>
+                                <state key="normal" title="Complete"/>
+                                <connections>
+                                    <action selector="onCompleteButtonPressed:" destination="JqR-e7-8VD" eventType="touchUpInside" id="b3j-dq-u9h"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="y24-TT-Plh" firstAttribute="centerX" secondItem="9HD-gy-Lzg" secondAttribute="centerX" id="5m0-E8-HPI"/>
+                            <constraint firstItem="IDF-SV-2uG" firstAttribute="centerX" secondItem="9HD-gy-Lzg" secondAttribute="centerX" id="R2v-D4-sF0"/>
+                            <constraint firstItem="IDF-SV-2uG" firstAttribute="top" secondItem="y24-TT-Plh" secondAttribute="bottom" constant="75.5" id="Vev-Iz-RZS"/>
+                            <constraint firstItem="y24-TT-Plh" firstAttribute="top" secondItem="BPc-mP-WdC" secondAttribute="bottom" constant="79" id="XR8-Y0-lcv"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="taskLabel" destination="y24-TT-Plh" id="C0n-d9-eXR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mcz-Tb-nh4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="972" y="861.3193403298352"/>
+        </scene>
         <!--DoIt-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -46,6 +88,7 @@
                     <connections>
                         <outlet property="taskList" destination="5Ec-7T-fA4" id="v2o-Nd-ID7"/>
                         <segue destination="wqD-FX-ix4" kind="show" identifier="addTaskSegue" id="3sc-iT-7Fx"/>
+                        <segue destination="JqR-e7-8VD" kind="show" identifier="selectTaskSegue" id="Csj-gf-Y5x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

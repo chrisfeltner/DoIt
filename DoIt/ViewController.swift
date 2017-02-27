@@ -9,9 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     @IBOutlet weak var taskList: UITableView!
     var tasks : [Task] = []
+    var selectedTaskIndex = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -19,7 +20,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         taskList.dataSource = self
         taskList.delegate = self
     }
-
+    
     @IBAction func onAddButtonPress(_ sender: Any) {
         performSegue(withIdentifier: "addTaskSegue", sender: nil)
     }
@@ -29,10 +30,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nextVC = segue.destination as! CreateTaskViewController
-        nextVC.previousVC = self
+        if segue.identifier == "addTaskSegue"
+        {
+            let nextVC = segue.destination as! CreateTaskViewController
+            nextVC.previousVC = self
+        }
+        else if segue.identifier == "selectTaskSegue"
+        {
+            let nextVC = segue.destination as! CompleteTaskViewController
+            nextVC.previousVC = self
+            nextVC.task = sender as! Task
+        }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         if(tasks[indexPath.row].isImportant)
@@ -45,6 +55,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let task = tasks[indexPath.row]
+        selectedTaskIndex = indexPath.row
+        performSegue(withIdentifier: "selectTaskSegue", sender: task)
+        
+    }
+    
     func makeTasks() -> [Task]
     {
         let task1 = Task(name: "Walk dog", isImportant: false)
@@ -52,6 +69,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let task3 = Task(name: "Finsih work", isImportant: false)
         return [task1, task2, task3]
     }
-
+    
 }
 
